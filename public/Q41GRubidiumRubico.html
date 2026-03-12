@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Michaela Alexa Rubico">
+<title>Rate Movies !</title>
+
+<style>
+
+body {
+    background-color: #eaf3fb;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    color: #1f3a5f;
+    text-align: center;
+    padding-bottom: 50px;
+}
+
+.header-box {
+    width: 40%;
+    margin: 30px auto 15px;
+    padding: 25px;
+    background-color: #4f81bd;
+    border-radius: 10px;
+    font-size: 34px;
+    font-weight: 600;
+    color: white;
+}
+
+form {
+    width: 40%;
+    margin: auto;
+    background-color: #cfe2f3;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 500;
+}
+
+input, select {
+    width: 80%;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #9bbce0;
+    font-family: 'Poppins', sans-serif;
+}
+
+input:focus, select:focus {
+    border: 2px solid #2e75b6;
+    outline: none;
+    background-color: #f4faff;
+}
+
+.button {
+    width: 200px;
+    margin: 20px;
+    padding: 12px;
+    background-color: #4f81bd;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #2e75b6;
+}
+
+.star {
+    font-size: 30px;
+    cursor: pointer;
+    color: rgb(69, 66, 66);
+}
+
+.star.selected {
+    color: rgb(255, 224, 46);
+}
+
+.movie-item {
+    width: 40%;
+    margin: 10px auto;
+    background: white;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header-box">Add a Movie</div>
+
+<form id="movieForm">
+
+<label>Title:</label>
+<input type="text" id="title">
+
+<label>Year:</label>
+<input type="number" id="year">
+
+<label>Genre:</label>
+<select id="genre">
+<option>Action</option>
+<option>Romance</option>
+<option>RomCom</option>
+<option>Comedy</option>
+<option>Drama</option>
+<option>Horror</option>
+<option>Sci-Fi</option>
+
+</select>
+
+<label>Rating:</label>
+<div id="stars">
+<span class="star" data-value="1">★</span>
+<span class="star" data-value="2">★</span>
+<span class="star" data-value="3">★</span>
+<span class="star" data-value="4">★</span>
+<span class="star" data-value="5">★</span>
+</div>
+
+<button type="button" class="button" onclick="addMovie()">Add Movie</button>
+
+</form>
+
+<div class="header-box">Movie List</div>
+
+<div id="movieList"></div>
+
+<script>
+
+let rating = 0;
+
+//stars
+
+document.querySelectorAll(".star").forEach(star => {
+
+    star.addEventListener("click", function(){
+
+        rating = this.dataset.value;
+
+        document.querySelectorAll(".star").forEach(s=>{
+            s.classList.remove("selected");
+        });
+
+        for(let i=0;i<rating;i++){
+            document.querySelectorAll(".star")[i].classList.add("selected");
+        }
+
+    });
+
+});
+
+
+window.onload = function(){
+    displayMovies();
+}
+
+//add
+
+function addMovie(){
+
+    const title = document.getElementById("title").value;
+    const year = document.getElementById("year").value;
+    const genre = document.getElementById("genre").value;
+
+    const movie = {
+        title: title,
+        year: year,
+        genre: genre,
+        rating: rating
+    };
+
+    let movies = JSON.parse(localStorage.getItem("movies")) || [];
+
+    movies.push(movie);
+
+    localStorage.setItem("movies", JSON.stringify(movies));
+
+    displayMovies();
+
+}
+
+//list display
+
+function displayMovies(){
+
+    const movieList = document.getElementById("movieList");
+    movieList.innerHTML = "";
+
+    let movies = JSON.parse(localStorage.getItem("movies")) || [];
+
+    movies.forEach(movie => {
+
+        let stars = "★".repeat(movie.rating);
+
+        movieList.innerHTML += `
+        <div class="movie-item">
+        ${movie.title} (${movie.year}) - ${movie.genre}, Rating: ${stars}
+        </div>
+        `;
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

@@ -57,7 +57,7 @@
 
 - Guided Question: What changed compared to the default static positioning? Try to give different values to top and left or you can change it to bottom, right.
 
-The sidebar moved and created a 20 px gap away from the top and 20 px away from the left. This also applies when we change it to bottom/right and when we change the px value. Comparing this to static position, static position cares about the other elements on the page not letting it to overlap and move around like relative position.
+**The sidebar moved 20 px down and 20 px to the right from its original position. Unlike static positioning, relative positioning allows the element to be shifted using top, left, right, or bottom while still keeping its original space in the layout. Other elements are not affected and will not overlap it.**
 
 ### Step 2 (Fixed):
 
@@ -65,7 +65,7 @@ The sidebar moved and created a 20 px gap away from the top and 20 px away from 
 
 - Guided Question: What happens when you scroll the page? Why does the footer behave differently from position relative?
 
-When I scroll, the footer remains at the very bottom of the screen since the bottom was set to 0 and that position is fixed. 
+**When I scroll, the footer stays visible at the bottom of the screen at all times. This is because fixed position places the element relative to the browser view not the document. Unlike relative positioning, it does not move along the page when scrolling.**
 
 ### Step 3 (Absolute):
 
@@ -73,7 +73,7 @@ When I scroll, the footer remains at the very bottom of the screen since the bot
 
 - Guided Question: What is the effect of position: absolute on an element? How is it different from fixed?
 
-Setting position to absolute on an element, fixed the element on the page. But compared to fixed position, it does not remain at a specific spot on the screen. You could scroll and may not see it on your screen but it will stay at that page position.
+**Setting position to absolute removes the element from the normal layout and places it based on a specific position on the page. Unlike fixed, the element does not stay in the same place on the screen when scrolling—it scrolls with the page.**
 
 ### Step 4 : (Absolute)
 
@@ -94,17 +94,40 @@ Setting position to absolute on an element, fixed the element on the page. But c
 
 - Guided Question: Why does the notice appear on top of the content? What happens if you swap the z‑index values?
 
+**The notice appears on top of the content because it has a higher z-index value than the content. The z-index controls which element is displayed in front when elements overlap. If the z-index values are swapped, then the content will appear on top of the notice.**
+
 - Challenge: 
     * What changes that you have to do on the code that will position .notice box on the top right corner of the .content box? Please write the code on paper as well (both html and css on the part of .notice and .content).
     * Try to change the position of .content to relative then to fixed. What do you observed each time?
     * What do you observe on about the effect of z-index on .notice and .content boxes?
 
+- Challenge Answers:
+
+**1. To place the .notice at the top-right corner of .content, .content must be set to relative position so that .notice can use it as some sort of reference.**
+
+**2. When .content is set to relative, the .notice stays positioned inside the .content box. And when .content is set to fixed, the .content stays in the same place on the screen even when scrolling, and the .notice also stays with it.**
+
+**3. The z-index determines which element appears on top when elements overlap. The element with the higher z-index will be displayed in front, while the lower one will appear behind.**
+
 3. Please answer the following reflection questions (15 minutes)
 
     a. Could you summarize the differences between the CSS position values (static, relative, absolute, fixed)? 
 
+    - **Static: Default position, follows normal page flow.**
+    - **Relative: Moves from its original position but still keeps its space.**
+    - **Absolute: Positioned relative to its nearest positioned parent, removed from the normal flow.**
+    - **Fixed: Stays in the same place on the screen even when scrolling.**
+
     b. How does absolute positioning depend on its parent element?
+
+    - **Absolute positioning depends on the nearest parent element that has a position set (like relative, absolute, or fixed). If no parent has a position, it will be positioned relative to the whole page.**
 
     c. How do you differentiate sticky from fixed (you can research on sticky)?
 
+    - **Fixed: Always stays in the same position on the screen.**
+    - **Sticky: Acts like relative at first, but becomes fixed when you scroll to a certain point.**
+
     d. If you were designing a webpage for a school event, how might you use positioning to highlight important information? Please give concrete examples.
+
+    - **I would use fixed for the navigation bar so it stays visible while scrolling.**
+    - **I would use absolute to place labels like "Important" on announcements.**
